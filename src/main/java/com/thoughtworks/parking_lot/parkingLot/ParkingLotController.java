@@ -31,18 +31,29 @@ public class ParkingLotController {
 
     @GetMapping(value = "/{name}", produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Optional<ParkingLot>> listSingleParkingLot(@PathVariable String name) throws NotFoundException {
-        Optional<ParkingLot> foundParkingLot = parkingLotService.findByName(name);
-        if(foundParkingLot.isPresent()){
-            return new ResponseEntity<Optional<ParkingLot>>(foundParkingLot, HttpStatus.OK);
-        }
-        throw new NotFoundException("Parking lot " + name + " does not exist!");
+    public ResponseEntity<Optional<ParkingLot>>
+        listSingleParkingLot(@PathVariable String name) throws NotFoundException {
+            Optional<ParkingLot> foundParkingLot = parkingLotService.findByName(name);
+            if(foundParkingLot.isPresent()){
+                return new ResponseEntity<Optional<ParkingLot>>(foundParkingLot, HttpStatus.OK);
+            }
+            throw new NotFoundException("Parking lot " + name + " does not exist!");
     }
 
-//    @RequestMapping(produces = {"application/json"})
-//    public Iterable<ParkingLot> listAllParkingLots(@RequestBody ParkingLot parkingLot){
-//        return parkingLotService.viewAllParkingLots(parkingLot);
-//    }
+    @PatchMapping(value = "/{name}", produces = {"application/json"})
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Optional<ParkingLot>>
+            updateParkingLot(@PathVariable String name, @RequestBody ParkingLot parkingLot) throws NotFoundException {
+                Optional<ParkingLot> searchParkingLot = parkingLotService.findByName(name);
+                if(searchParkingLot.isPresent()){
+                    ParkingLot foundParkingLot = searchParkingLot.get();
+                    foundParkingLot.setCapacity(parkingLot.getCapacity());
+                    parkingLotService.save(foundParkingLot);
+                    return new ResponseEntity<Optional<ParkingLot>>(Optional.of(foundParkingLot), HttpStatus.OK);
+                }
+                throw new NotFoundException("Parking lot " + name + " does not exist!");
+    }
+
 
     @DeleteMapping(value = "/{name}", produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
