@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Optional;
@@ -39,11 +40,11 @@ public class ParkingLotController {
 
     @GetMapping(value = "/{name}", produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Optional<ParkingLot>>
+    public ResponseEntity<ParkingLot>
         listSingleParkingLot(@PathVariable String name) throws NotFoundException {
-            Optional<ParkingLot> foundParkingLot = parkingLotService.findByName(name);
-            if(foundParkingLot.isPresent()){
-                return new ResponseEntity<Optional<ParkingLot>>(foundParkingLot, HttpStatus.OK);
+            ParkingLot foundParkingLot = parkingLotService.findByName(name);
+            if(foundParkingLot != null){
+                return new ResponseEntity<ParkingLot>(foundParkingLot, HttpStatus.OK);
             }
             throw new NotFoundException("Parking lot " + name + " does not exist!");
     }
@@ -52,12 +53,11 @@ public class ParkingLotController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Optional<ParkingLot>>
             updateParkingLot(@PathVariable String name, @RequestBody ParkingLot parkingLot) throws NotFoundException {
-                Optional<ParkingLot> searchParkingLot = parkingLotService.findByName(name);
-                if(searchParkingLot.isPresent()){
-                    ParkingLot foundParkingLot = searchParkingLot.get();
-                    foundParkingLot.setCapacity(parkingLot.getCapacity());
-                    parkingLotService.save(foundParkingLot);
-                    return new ResponseEntity<Optional<ParkingLot>>(Optional.of(foundParkingLot), HttpStatus.OK);
+                ParkingLot searchParkingLot = parkingLotService.findByName(name);
+                if(searchParkingLot != null){
+                    searchParkingLot.setCapacity(parkingLot.getCapacity());
+                    parkingLotService.save(searchParkingLot);
+                    return new ResponseEntity<Optional<ParkingLot>>(Optional.of(searchParkingLot), HttpStatus.OK);
                 }
                 throw new NotFoundException("Parking lot " + name + " does not exist!");
     }
@@ -74,21 +74,51 @@ public class ParkingLotController {
 
     @PostMapping(value = "/{name}", produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Optional<Orders>>
+    public ResponseEntity<Orders>
         createOrder(@PathVariable String name, @RequestBody Car car) throws NotFoundException {
-        Optional<ParkingLot> searchParking = parkingLotService.findByName(name);
-            if(searchParking.isPresent()){
-                Orders newOrders = new Orders();
-                newOrders.setParkingLotName(name);
-                newOrders.setPlateNumber(car.getPlateNumber());
-                newOrders.setCreationTime(new Timestamp(new Date().getTime()));
-                newOrders.setCloseTime(null);
-                newOrders.setOrderStatus("Open");
-                orderService.save(newOrders);
-                return new ResponseEntity<Optional<Orders>>(Optional.of(newOrders), HttpStatus.OK);
+        Orders plateNumber = orderService.findPlateNumber(car.getPlateNumber());
+        ParkingLot parkingLot = parkingLotService.findByName(name);
+        if (parkingLot != null) {
+            if(parkingLot.getCapacity() >= 1) {
+                if (plateNumber == null) {
+                    Orders newOrder = new Orders();
+                    newOrder.setParkingLotName(name);
+                    newOrder.setPlateNumber(car.getPlateNumber());
+                    newOrder.setCreationTime(new Timestamp(new Date().getTime()));
+                    newOrder.setCloseTime(null);
+                    newOrder.setOrderStatus("Open");
+                    orderService.save(newOrder);
+                    parkingLot.setOrders(newOrder);
+                    parkingLot.setCapacity(parkingLot.getCapacity()-1);
+                    parkingLotService.save(parkingLot);
+                    return new ResponseEntity<Orders>(newOrder, HttpStatus.OK);
+                }
+                throw new NotFoundException(plateNumber + " already has an order!");
             }
-            throw new NotFoundException("Parking lot " + name + " is full!");
-
+            throw new NotFoundException("The parking lot is full!");
+        }
+        throw new NotFoundException("Parking lot " + name + " does not exist!");
     }
 
-}
+
+    @PatchMapping(value = "/{name}/orders/{plateNumber}", produces = {"application/json"})
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Orders>
+    updateOrder(@PathVariable String name, @PathVariable String plateNumber) throws NotFoundException {
+        Orders existingOrder = orderService.findPlateNumber(plateNumber);
+        ParkingLot parkingLot = parkingLotService.findByName(name);
+        if (parkingLot != null) {
+                if (existingOrder != null && existingOrder.getOrderStatus().equals("Open")) {
+                    existingOrder.setCloseTime(new Timestamp(new Date().getTime()));
+                    existingOrder.setOrderStatus("Close");
+                    orderService.save(existingOrder);
+                    parkingLot.setOrders(existingOrder);
+                    parkingLotService.save(parkingLot);
+                    return new ResponseEntity<Orders>(existingOrder, HttpStatus.OK);
+                }
+                throw new NotFoundException("Order does not exist for " + plateNumber + "!");
+        }
+        throw new NotFoundException("Parking lot " + name + " does not exist!");
+    }
+
+}//end main controller

@@ -13,7 +13,11 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public Orders save(Orders newOrders) {
-        return orderRepository.save(newOrders);
+    public void save(Orders newOrders) {
+        orderRepository.save(newOrders);
+    }
+
+    public Orders findPlateNumber(String plateNumber) {
+        return orderRepository.findPlateNumber(plateNumber);
     }
 }

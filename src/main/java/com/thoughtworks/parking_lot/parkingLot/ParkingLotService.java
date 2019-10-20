@@ -2,7 +2,6 @@ package com.thoughtworks.parking_lot.parkingLot;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -25,16 +24,15 @@ public class ParkingLotService {
     }
 
     public boolean delete(String name) {
-        Optional<ParkingLot> optionalCompany = findByName(name);
-        if (optionalCompany.isPresent()) {
-            ParkingLot existingParkingLot = optionalCompany.get();
-            parkingLotRepository.delete(existingParkingLot);
+        ParkingLot parkingLot = parkingLotRepository.findByName(name);
+        if (parkingLot != null) {
+            parkingLotRepository.delete(parkingLot);
             return true;
         }
         return false;
     }
 
-    Optional<ParkingLot> findByName(String name) {
+    ParkingLot findByName(String name) {
         return parkingLotRepository.findByName(name);
     }
 

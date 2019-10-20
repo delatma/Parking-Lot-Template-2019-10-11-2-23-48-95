@@ -1,9 +1,8 @@
 package com.thoughtworks.parking_lot.parkingLot;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.thoughtworks.parking_lot.order.Orders;
+
+import javax.persistence.*;
 
 @Entity
 public class ParkingLot {
@@ -11,6 +10,9 @@ public class ParkingLot {
     private String name;
     private Integer capacity;
     private String location;
+
+    @OneToOne
+    private Orders orders;
 
     public ParkingLot() {
     }
@@ -38,4 +40,13 @@ public class ParkingLot {
     public void setLocation(String location) {
         this.location = location;
     }
+
+    public Orders getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Orders orders) {
+        this.orders = orders;
+    }
+
 }

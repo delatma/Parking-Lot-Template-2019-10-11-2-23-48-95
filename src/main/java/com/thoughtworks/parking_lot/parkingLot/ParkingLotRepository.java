@@ -10,9 +10,5 @@ import java.util.Optional;
 @Repository
 public interface ParkingLotRepository extends JpaRepository<ParkingLot, String> {
     @Query("Select u from ParkingLot u where u.name = :name")
-    Optional<ParkingLot> findByName(@Param("name") String name);
-//    @Query("Select c from Company c where c.name = :name")
-//    Optional<Company> findByName(@Param("name") String name);
-//
-//    Optional<Company> findByNameContaining(String name);
+    ParkingLot findByName(@Param("name") String name);
 }

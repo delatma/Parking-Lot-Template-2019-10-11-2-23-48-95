@@ -15,7 +15,6 @@ public class Orders {
     private Long id;
     private String parkingLotName;
     private String plateNumber;
-    private String status;
     private Timestamp creationTime;
     private Timestamp closeTime;
     private String orderStatus;
@@ -45,14 +44,6 @@ public class Orders {
 
     public void setPlateNumber(String plateNumber) {
         this.plateNumber = plateNumber;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public Timestamp getCreationTime() {
