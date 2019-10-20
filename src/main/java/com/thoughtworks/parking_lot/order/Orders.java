@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
-public class Order {
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -20,7 +20,7 @@ public class Order {
     private Timestamp closeTime;
     private String orderStatus;
 
-    public Order() {
+    public Orders() {
     }
 
     public Long getId() {

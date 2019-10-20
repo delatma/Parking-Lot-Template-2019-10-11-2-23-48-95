@@ -76,3 +76,24 @@ create table order (id bigint not null, parking_lot_name varchar(255), plate_num
 2019-10-20 19:23:41 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE ORDER[*] (ID BIGINT NOT NULL, PARKING_LOT_NAME VARCHAR(255), PLATE_NUMBER VARCHAR(255), STATUS VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
 create table order (id bigint not null, parking_lot_name varchar(255), plate_number varchar(255), status varchar(255), primary key (id)) [42001-199]
+2019-10-20 19:50:33 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE ORDER[*] (ID BIGINT NOT NULL, CLOSE_TIME TIMESTAMP, CREATION_TIME TIMESTAMP, ORDER_STATUS VARCHAR(255), PARKING_LOT_NAME VARCHAR(255), PLATE_NUMBER VARCHAR(255), STATUS VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table order (id bigint not null, close_time timestamp, creation_time timestamp, order_status varchar(255), parking_lot_name varchar(255), plate_number varchar(255), status varchar(255), primary key (id)) [42001-199]
+2019-10-20 19:51:42 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE ORDER[*] (ID BIGINT NOT NULL, CLOSE_TIME TIMESTAMP, CREATION_TIME TIMESTAMP, ORDER_STATUS VARCHAR(255), PARKING_LOT_NAME VARCHAR(255), PLATE_NUMBER VARCHAR(255), STATUS VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table order (id bigint not null, close_time timestamp, creation_time timestamp, order_status varchar(255), parking_lot_name varchar(255), plate_number varchar(255), status varchar(255), primary key (id)) [42001-199]
+2019-10-20 19:52:15 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE ORDER[*] (ID BIGINT NOT NULL, CLOSE_TIME TIMESTAMP, CREATION_TIME TIMESTAMP, ORDER_STATUS VARCHAR(255), PARKING_LOT_NAME VARCHAR(255), PLATE_NUMBER VARCHAR(255), STATUS VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table order (id bigint not null, close_time timestamp, creation_time timestamp, order_status varchar(255), parking_lot_name varchar(255), plate_number varchar(255), status varchar(255), primary key (id)) [42001-199]
+2019-10-20 19:52:47 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO ORDER[*] (CLOSE_TIME, CREATION_TIME, ORDER_STATUS, PARKING_LOT_NAME, PLATE_NUMBER, STATUS, ID) VALUES (?, ?, ?, ?, ?, ?, ?) "; expected "identifier"; SQL statement:
+insert into order (close_time, creation_time, order_status, parking_lot_name, plate_number, status, id) values (?, ?, ?, ?, ?, ?, ?) [42001-199]
+2019-10-20 19:53:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO ORDER[*] (CLOSE_TIME, CREATION_TIME, ORDER_STATUS, PARKING_LOT_NAME, PLATE_NUMBER, STATUS, ID) VALUES (?, ?, ?, ?, ?, ?, ?) "; expected "identifier"; SQL statement:
+insert into order (close_time, creation_time, order_status, parking_lot_name, plate_number, status, id) values (?, ?, ?, ?, ?, ?, ?) [42001-199]
+2019-10-20 19:58:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE ORDER[*] (ID BIGINT NOT NULL, CLOSE_TIME TIMESTAMP, CREATION_TIME TIMESTAMP, ORDER_STATUS VARCHAR(255), PARKING_LOT_NAME VARCHAR(255), PLATE_NUMBER VARCHAR(255), STATUS VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table order (id bigint not null, close_time timestamp, creation_time timestamp, order_status varchar(255), parking_lot_name varchar(255), plate_number varchar(255), status varchar(255), primary key (id)) [42001-199]
+2019-10-20 19:58:27 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE ORDER[*] (ID BIGINT NOT NULL, CLOSE_TIME TIMESTAMP, CREATION_TIME TIMESTAMP, ORDER_STATUS VARCHAR(255), PARKING_LOT_NAME VARCHAR(255), PLATE_NUMBER VARCHAR(255), STATUS VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table order (id bigint not null, close_time timestamp, creation_time timestamp, order_status varchar(255), parking_lot_name varchar(255), plate_number varchar(255), status varchar(255), primary key (id)) [42001-199]

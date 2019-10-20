@@ -1,7 +1,7 @@
 package com.thoughtworks.parking_lot.parkingLot;
 
 import com.thoughtworks.parking_lot.car.Car;
-import com.thoughtworks.parking_lot.order.Order;
+import com.thoughtworks.parking_lot.order.Orders;
 import com.thoughtworks.parking_lot.order.OrderService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -76,18 +74,18 @@ public class ParkingLotController {
 
     @PostMapping(value = "/{name}", produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Optional<Order>>
+    public ResponseEntity<Optional<Orders>>
         createOrder(@PathVariable String name, @RequestBody Car car) throws NotFoundException {
         Optional<ParkingLot> searchParking = parkingLotService.findByName(name);
             if(searchParking.isPresent()){
-                Order newOrder = new Order();
-                newOrder.setParkingLotName(name);
-                newOrder.setPlateNumber(car.getPlateNumber());
-                newOrder.setCreationTime(new Timestamp(new Date().getTime()));
-                newOrder.setCloseTime(null);
-                newOrder.setOrderStatus("Open");
-                orderService.save(newOrder);
-                return new ResponseEntity<Optional<Order>>(Optional.of(newOrder), HttpStatus.OK);
+                Orders newOrders = new Orders();
+                newOrders.setParkingLotName(name);
+                newOrders.setPlateNumber(car.getPlateNumber());
+                newOrders.setCreationTime(new Timestamp(new Date().getTime()));
+                newOrders.setCloseTime(null);
+                newOrders.setOrderStatus("Open");
+                orderService.save(newOrders);
+                return new ResponseEntity<Optional<Orders>>(Optional.of(newOrders), HttpStatus.OK);
             }
             throw new NotFoundException("Parking lot " + name + " is full!");
 
