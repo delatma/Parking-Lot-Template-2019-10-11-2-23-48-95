@@ -1,11 +1,14 @@
 package com.thoughtworks.parking_lot.parkingLot;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class ParkingLot {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String name;
     private Integer capacity;
     private String location;
