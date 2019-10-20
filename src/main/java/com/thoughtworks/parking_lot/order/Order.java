@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 public class Order {
@@ -13,6 +16,9 @@ public class Order {
     private String parkingLotName;
     private String plateNumber;
     private String status;
+    private Timestamp creationTime;
+    private Timestamp closeTime;
+    private String orderStatus;
 
     public Order() {
     }
@@ -47,5 +53,29 @@ public class Order {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Timestamp getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(Timestamp creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public Timestamp getCloseTime() {
+        return closeTime;
+    }
+
+    public void setCloseTime(Timestamp closeTime) {
+        this.closeTime = closeTime;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }

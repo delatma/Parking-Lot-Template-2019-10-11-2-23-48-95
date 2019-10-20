@@ -1,5 +1,8 @@
 package com.thoughtworks.parking_lot.parkingLot;
 
+import com.thoughtworks.parking_lot.car.Car;
+import com.thoughtworks.parking_lot.order.Order;
+import com.thoughtworks.parking_lot.order.OrderService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -9,6 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -16,6 +23,9 @@ import java.util.Optional;
 public class ParkingLotController {
     @Autowired
     private ParkingLotService parkingLotService;
+
+    @Autowired
+    private OrderService orderService;
 
     @PostMapping(produces = {"application/json"})
     public HttpEntity<ParkingLot> add(@RequestBody ParkingLot parkingLot){
@@ -54,7 +64,6 @@ public class ParkingLotController {
                 throw new NotFoundException("Parking lot " + name + " does not exist!");
     }
 
-
     @DeleteMapping(value = "/{name}", produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> delete(@PathVariable String name) throws NotFoundException {
@@ -63,6 +72,25 @@ public class ParkingLotController {
             return new ResponseEntity<>("Parking lot `" + name + "` deleted successfully!", HttpStatus.OK);
         }
         throw new NotFoundException("Parking lot " + name + " does not exist!");
+    }
+
+    @PostMapping(value = "/{name}", produces = {"application/json"})
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Optional<Order>>
+        createOrder(@PathVariable String name, @RequestBody Car car) throws NotFoundException {
+        Optional<ParkingLot> searchParking = parkingLotService.findByName(name);
+            if(searchParking.isPresent()){
+                Order newOrder = new Order();
+                newOrder.setParkingLotName(name);
+                newOrder.setPlateNumber(car.getPlateNumber());
+                newOrder.setCreationTime(new Timestamp(new Date().getTime()));
+                newOrder.setCloseTime(null);
+                newOrder.setOrderStatus("Open");
+                orderService.save(newOrder);
+                return new ResponseEntity<Optional<Order>>(Optional.of(newOrder), HttpStatus.OK);
+            }
+            throw new NotFoundException("Parking lot " + name + " is full!");
+
     }
 
 }
