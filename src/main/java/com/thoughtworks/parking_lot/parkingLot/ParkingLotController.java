@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/parkinglots")
 public class ParkingLotController {
@@ -27,13 +29,22 @@ public class ParkingLotController {
         return parkingLotService.listAllParkingLots(PageRequest.of(page, pageSize, Sort.by(orderByName)));
     }
 
-    @RequestMapping(produces = {"application/json"})
-    public Iterable<ParkingLot> listAllParkingLots(@RequestBody ParkingLot parkingLot){
-        return parkingLotService.viewAllParkingLots(parkingLot);
+    @GetMapping(value = "/{name}", produces = {"application/json"})
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Optional<ParkingLot>> listSingleParkingLot(@PathVariable String name) throws NotFoundException {
+        Optional<ParkingLot> foundParkingLot = parkingLotService.findByName(name);
+        if(foundParkingLot.isPresent()){
+            return new ResponseEntity<Optional<ParkingLot>>(foundParkingLot, HttpStatus.OK);
+        }
+        throw new NotFoundException("Parking lot " + name + " does not exist!");
     }
 
-    @DeleteMapping(produces = {"application/json"})
-    @RequestMapping("/{name}")
+//    @RequestMapping(produces = {"application/json"})
+//    public Iterable<ParkingLot> listAllParkingLots(@RequestBody ParkingLot parkingLot){
+//        return parkingLotService.viewAllParkingLots(parkingLot);
+//    }
+
+    @DeleteMapping(value = "/{name}", produces = {"application/json"})
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> delete(@PathVariable String name) throws NotFoundException {
         boolean wasDeleted = parkingLotService.delete(name);

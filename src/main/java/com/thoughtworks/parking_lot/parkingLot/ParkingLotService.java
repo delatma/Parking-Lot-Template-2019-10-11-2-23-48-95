@@ -34,7 +34,7 @@ public class ParkingLotService {
         return false;
     }
 
-    private Optional<ParkingLot> findByName(String name) {
+    Optional<ParkingLot> findByName(String name) {
         return parkingLotRepository.findByName(name);
     }
 
