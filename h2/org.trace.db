@@ -19,3 +19,12 @@ create table order (id bigint not null, parking_lot_name varchar(255), plate_num
 2019-10-20 17:40:51 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE ORDER[*] (ID BIGINT NOT NULL, PARKING_LOT_NAME VARCHAR(255), PLATE_NUMBER VARCHAR(255), STATUS VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
 create table order (id bigint not null, parking_lot_name varchar(255), plate_number varchar(255), status varchar(255), primary key (id)) [42001-199]
+2019-10-20 17:58:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE ORDER[*] (ID BIGINT NOT NULL, PARKING_LOT_NAME VARCHAR(255), PLATE_NUMBER VARCHAR(255), STATUS VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table order (id bigint not null, parking_lot_name varchar(255), plate_number varchar(255), status varchar(255), primary key (id)) [42001-199]
+2019-10-20 18:22:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE ORDER[*] (ID BIGINT NOT NULL, PARKING_LOT_NAME VARCHAR(255), PLATE_NUMBER VARCHAR(255), STATUS VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table order (id bigint not null, parking_lot_name varchar(255), plate_number varchar(255), status varchar(255), primary key (id)) [42001-199]
+2019-10-20 18:26:50 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE ORDER[*] (ID BIGINT NOT NULL, PARKING_LOT_NAME VARCHAR(255), PLATE_NUMBER VARCHAR(255), STATUS VARCHAR(255), PRIMARY KEY (ID)) "; expected "identifier"; SQL statement:
+create table order (id bigint not null, parking_lot_name varchar(255), plate_number varchar(255), status varchar(255), primary key (id)) [42001-199]

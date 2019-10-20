@@ -1,6 +1,10 @@
 package com.thoughtworks.parking_lot.parkingLot;
 
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -10,14 +14,24 @@ public class ParkingLotController {
     private ParkingLotService parkingLotService;
 
     @PostMapping(produces = {"application/json"})
-    public ParkingLot add(@RequestBody ParkingLot parkingLot){
-        return parkingLotService.save(parkingLot);
+    public HttpEntity<ParkingLot> add(@RequestBody ParkingLot parkingLot){
+        return new ResponseEntity<>(parkingLotService.save(parkingLot), HttpStatus.CREATED);
     }
-//    AC1: If I buy a new parking lot,
-//    I can add a parking lot on the system interface. The information I need to input include:
-//    name(unique)
-//    capacity(cannot be minus)
-//    location
 
+    @RequestMapping(produces = {"application/json"})
+    public Iterable<ParkingLot> listAllParkingLots(@RequestBody ParkingLot parkingLot){
+        return parkingLotService.viewAllParkingLots(parkingLot);
+    }
+
+    @DeleteMapping(produces = {"application/json"})
+    @RequestMapping("/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> delete(@PathVariable String name) throws NotFoundException {
+        boolean wasDeleted = parkingLotService.delete(name);
+        if(wasDeleted){
+            return new ResponseEntity<>("Parking lot `" + name + "` deleted successfully!", HttpStatus.OK);
+        }
+        throw new NotFoundException("Parking lot " + name + " does not exist!");
+    }
 
 }
