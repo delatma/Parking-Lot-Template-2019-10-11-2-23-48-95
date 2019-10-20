@@ -21,7 +21,7 @@ public class ParkingLotController {
     }
 
     @GetMapping(produces = {"application/json"})
-    public Iterable<ParkingLot> listMultipleCompanies(@RequestParam(defaultValue = "0") Integer page,
+    public Iterable<ParkingLot> listParkingLotsByPage(@RequestParam(defaultValue = "0") Integer page,
                                                    @RequestParam(defaultValue = "15") Integer pageSize) {
         Sort.Order orderByName = new Sort.Order(Sort.Direction.ASC, "name").ignoreCase();
         return parkingLotService.listAllParkingLots(PageRequest.of(page, pageSize, Sort.by(orderByName)));
