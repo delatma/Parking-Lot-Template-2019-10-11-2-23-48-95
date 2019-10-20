@@ -1,6 +1,7 @@
 package com.thoughtworks.parking_lot.parkingLot;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +36,9 @@ public class ParkingLotService {
 
     private Optional<ParkingLot> findByName(String name) {
         return parkingLotRepository.findByName(name);
+    }
+
+    public Iterable<ParkingLot> listAllParkingLots(PageRequest pageRequest) {
+        return parkingLotRepository.findAll(pageRequest);
     }
 }

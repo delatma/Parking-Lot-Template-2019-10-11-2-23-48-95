@@ -2,6 +2,8 @@ package com.thoughtworks.parking_lot.parkingLot;
 
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,13 @@ public class ParkingLotController {
     @PostMapping(produces = {"application/json"})
     public HttpEntity<ParkingLot> add(@RequestBody ParkingLot parkingLot){
         return new ResponseEntity<>(parkingLotService.save(parkingLot), HttpStatus.CREATED);
+    }
+
+    @GetMapping(produces = {"application/json"})
+    public Iterable<ParkingLot> listMultipleCompanies(@RequestParam(defaultValue = "0") Integer page,
+                                                   @RequestParam(defaultValue = "15") Integer pageSize) {
+        Sort.Order orderByName = new Sort.Order(Sort.Direction.ASC, "name").ignoreCase();
+        return parkingLotService.listAllParkingLots(PageRequest.of(page, pageSize, Sort.by(orderByName)));
     }
 
     @RequestMapping(produces = {"application/json"})
