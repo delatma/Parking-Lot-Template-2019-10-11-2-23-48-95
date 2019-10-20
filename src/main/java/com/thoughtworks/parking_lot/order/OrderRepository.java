@@ -1,4 +1,6 @@
 package com.thoughtworks.parking_lot.order;
 
-public interface OrderRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface OrderRepository extends JpaRepository<Order, String> {
 }
